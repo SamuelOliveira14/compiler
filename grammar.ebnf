@@ -1,0 +1,40 @@
+program ::= "class" identifier [decl-list] body
+decl-list ::= decl ";" { decl ";"}
+decl ::= type ident-list
+ident-list ::= identifier {"," identifier}
+type ::= "int" | "string" | "float"
+body ::= "{" stmt-list "}"
+stmt-list ::= stmt ";" { stmt ";" }
+stmt ::= assign-stmt | if-stmt | do-stmt | read-stmt | write-stmt
+assign-stmt ::= identifier "=" simple-expr
+if-stmt ::= "if" "(" condition ")" "{" stmt-list "}" else-stmt
+else-stmt ::= "else" "{" stmt-list "}" | λ
+condition ::= expression
+do-stmt ::= "do" "{" stmt-list "}" do-suffix
+do-suffix ::= "while" "(" condition ")"
+read-stmt ::= "read" "(" identifier ")"
+write-stmt ::= "write" "(" writable ")"
+writable ::= simple-expr
+expression ::= simple-expr | simple-expr relop simple-expr
+simple-expr ::= term simple-expr-prime
+simple-expr-prime ::= addop term simple-expr-prime | λ
+term ::= factor-a term-prime
+term-prime ::= mulop factor-a term-prime | λ
+factor-a ::= factor | "!" factor | "-" factor
+factor ::= identifier | constant | "(" expression ")"
+relop ::= ">" | ">=" | "<" | "<=" | "!=" | "=="
+addop ::= "+" | "-" | "||"
+mulop ::= "*" | "/" | "&&"
+
+
+#Padrao de formacao dos tokens
+#constant → integer_const | literal | real_const
+#integer_const → nonzero digit* | 0
+#real_const → interger_const "." digit+
+#literal → " “ " caractere* " ” "
+#identifier → letter {letter | digit | " _ " }
+#letter → [A-Za-z]
+#digit → [0-9]
+#nonzero → [1-9]
+#caractere → um dos 256 caracteres do conjunto ASCII, exceto as
+#aspas e quebra de linha

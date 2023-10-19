@@ -1,8 +1,5 @@
 package main;
-import lexical.LexicalAnalysis;
-import lexical.Token;
-import lexical.TokenType;
-
+import syntactic.SyntacticAnalysis;
 public class Main {
     public static void main(String[] args) {
 
@@ -12,23 +9,10 @@ public class Main {
         }
 
         String path = args[0];
-        Token token;
         
-        try{
-            LexicalAnalysis lex = new LexicalAnalysis(path);
+        SyntacticAnalysis parser = new SyntacticAnalysis(path);
 
-            do{
-                token = lex.nextToken();
-                System.out.println(token.toString());
-            }while(token.getType() != TokenType.END_OF_FILE && token.getType() != TokenType.INVALID_TOKEN);
-            
-            lex.close();
-            System.out.println(lex.st.toString());
+        parser.start();
 
-        }catch(Exception e){
-            //System.err.println("Internal error " + (e.getMessage() == null ? "" : e.getMessage()));
-            e.printStackTrace();
-            System.exit(1);
-        }
     }
 }

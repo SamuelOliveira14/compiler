@@ -101,7 +101,6 @@ public class LexicalAnalysis {
                         }else{
                             type = TokenType.IDENTIFIER;
                             token = new WordToken(type, lexeme);
-                            //TODO: Put into ST
 
                             st.put((WordToken) token);
                         }
