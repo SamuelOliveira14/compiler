@@ -238,7 +238,10 @@ public class SyntacticAnalysis {
 
     // expression ::= simple-expr | simple-expr relop simple-expr
     public void expression() {
-        simpleExpr();
+        simpleExpr(); exprPrime();
+    }
+
+    public void exprPrime(){
         switch (current.getType()) {
             case GREATER:
             case GREATER_EQUAL:
