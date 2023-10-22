@@ -241,6 +241,7 @@ public class SyntacticAnalysis {
         simpleExpr(); exprPrime();
     }
 
+    // expr_prime ::= relop simple_expr | λ
     public void exprPrime(){
         switch (current.getType()) {
             case GREATER:
