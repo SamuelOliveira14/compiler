@@ -1,15 +1,22 @@
 package lexical;
 
+import semantic.Type;
+import semantic.Class;
 import java.util.HashMap;
+
 
 public class SymbolTable {
 
     private class Columns{
         //ST columns:
-        public String type;
+        public Type type;
+        public Class idClass;
+        public int offset;
 
-        public Columns(String s){
-            type = s;
+        public Columns(){
+            type = null;
+            idClass = null;
+            offset = 0;
         }
     }
 
@@ -19,28 +26,30 @@ public class SymbolTable {
         symbolTable = new HashMap<String,Columns>();
     }
 
-    public void put(WordToken token, String type){
-        Columns info = new Columns(type);
-        symbolTable.put(token.getLexeme(), info);
-    }
-
     public void put(WordToken token){
-        Columns info = new Columns(" ");
-        symbolTable.put(token.getLexeme(), info);
+        if(symbolTable.get(token.getLexeme()) == null) symbolTable.put(token.getLexeme(), new Columns());
     }
 
-    public void update(WordToken token, String type){
+    public void updateType(WordToken token, Type type){
         Columns info = symbolTable.get(token.getLexeme());
         info.type = type;
         symbolTable.replace(token.getLexeme(), info);
     }
 
-    public String toString(){
-        String s = "\nSymbol Table:\nID \t| Type \t|\n+---------------+\n";
-        for(String lexeme : symbolTable.keySet()){
-            s += "" + lexeme + "\t|" + symbolTable.get(lexeme).type + "\t|\n";
-        }
-        return s;
+    public void updateClass(WordToken token, Class idClass){
+        Columns info = symbolTable.get(token.getLexeme());
+        info.idClass = idClass;
+        symbolTable.replace(token.getLexeme(), info);
+    }
+
+    public Type getType(WordToken token){
+        Columns c = symbolTable.get(token.getLexeme());
+        return c.type;
+    }
+
+    public Class getClass(WordToken token){
+        Columns c = symbolTable.get(token.getLexeme());
+        return c.idClass;
     }
 
 }

@@ -13,10 +13,10 @@ public class LexicalAnalysis {
     private int currentChar;
     public SymbolTable st;
 
-    public LexicalAnalysis(String filePath) throws FileNotFoundException{
+    public LexicalAnalysis(String filePath, SymbolTable st) throws FileNotFoundException{
         this.lineCounter = 1;
         this.currentChar = ' ';
-        st = new SymbolTable();
+        this.st = st;
 
         try{
             this.file = new PushbackInputStream(new FileInputStream(filePath), 2);
